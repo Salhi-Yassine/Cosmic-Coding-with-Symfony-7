@@ -11,7 +11,7 @@ SYMFONY  = $(PHP) bin/console
 
 # Misc
 .DEFAULT_GOAL = help
-.PHONY        : help build up start down logs sh composer vendor sf cc test
+.PHONY        : help build up start down logs sh chown composer vendor sf cc test
 
 ## —— 🎵 🐳 The Symfony Docker Makefile 🐳 🎵 ——————————————————————————————————
 help: ## Outputs this help screen
@@ -40,6 +40,9 @@ test: ## Start tests with phpunit, pass the parameter "c=" to add options to php
 	@$(DOCKER_COMP) exec -e APP_ENV=test php bin/phpunit $(c)
 
 
+# for more info see https://github.com/dunglas/symfony-docker/blob/main/docs/troubleshooting.md
+chown: ## set yourself as owner of the project files that were created by the docker container
+	@$(DOCKER_COMP) run --rm php chown -R $(shell id -u)\:$(shell id -g) .
 ## —— Composer 🧙 ——————————————————————————————————————————————————————————————
 composer: ## Run composer, pass the parameter "c=" to run a given command, example: make composer c='req symfony/orm-pack'
 	@$(eval c ?=)
