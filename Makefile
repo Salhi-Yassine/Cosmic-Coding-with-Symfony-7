@@ -9,6 +9,10 @@ PHP      = $(PHP_CONT) php
 COMPOSER = $(PHP_CONT) composer
 SYMFONY  = $(PHP) bin/console
 
+# Executables: vendors
+PHP_CS_FIXER  = $(PHP_CONT) ./vendor/bin/php-cs-fixer
+
+
 # Misc
 .DEFAULT_GOAL = help
 .PHONY        : help build up start down logs sh chown composer vendor sf cc test
@@ -59,3 +63,8 @@ sf: ## List all Symfony commands or pass the parameter "c=" to run a given comma
 
 cc: c=c:c ## Clear the cache
 cc: sf
+
+fix-php: ## Fix files with php-cs-fixer
+	@$(eval c ?=)
+	@$(PHP_CS_FIXER) $(c)
+
