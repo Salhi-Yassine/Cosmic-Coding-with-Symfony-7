@@ -38,7 +38,6 @@ class StarshipRepository
                 'under construction',
             ),
         ];
-
     }
 
     public function find(int $id): ?Starship
@@ -48,6 +47,7 @@ class StarshipRepository
                 return $starship;
             }
         }
+
         return null;
     }
 }
